@@ -12,7 +12,6 @@ public class Server {
             Properties properties = new Properties();
             FileReader fr = new FileReader("src/main/resources/application.properties");
 
-
             properties.load(fr);
             int number = Integer.parseInt(properties.getProperty("server.port"));
             ServerSocket server = new ServerSocket(number);
@@ -25,6 +24,7 @@ public class Server {
                 ServerThread sct = new ServerThread(serverClient, counter);
                 sct.start();
             }
+
         } catch (Exception e) {
             System.out.println(e);
         }
