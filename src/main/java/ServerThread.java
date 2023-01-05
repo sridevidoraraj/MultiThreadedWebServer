@@ -23,19 +23,26 @@ public class ServerThread extends Thread{
 //            os.write("<TITLE>CSWeb</TITLE>".getBytes());
             FileInputStream input = new FileInputStream("D:\\Projects\\csweb\\index.html");
             System.out.println(input);
-
+            DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
             DataOutputStream os = new DataOutputStream(serverClient.getOutputStream());
-
             os.write("HTTP/1.0 200 OK\r\n".getBytes());
             os.write("\r\n".getBytes());
             os.write(input.readAllBytes());
-            os.flush();
+//            os.flush();
 
             byte[] data = new byte[1024];
             int totRead = 0, numRead;
             while ((numRead = input.read(data)) != -1) {
                 totRead += numRead;
                 os.write(data, 0, numRead);
+            }
+            String clientMessage="", serverMessage="";
+            while(!clientMessage.equals("bye")){
+                clientMessage=inStream.readUTF();
+                System.out.println("From Client-" +clientNo+ ": Message is :"+clientMessage);
+                serverMessage="From Server to Client-" + clientNo + " Message " + clientMessage ;
+                os.writeUTF(serverMessage);
+                os.flush();
             }
 //            os.write(("Content-Length: " + totRead + "\r\n").getBytes());
 //            serverClient.close();

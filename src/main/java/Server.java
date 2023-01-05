@@ -1,3 +1,5 @@
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -5,6 +7,7 @@ import java.util.Arrays;
 import java.util.Properties;
 
 public class Server {
+    Logger logger = Logger.getLogger(Server.class);
     public static void main(String[] args) throws IOException {
         System.out.println(Arrays.asList(args).toString());
         try {
