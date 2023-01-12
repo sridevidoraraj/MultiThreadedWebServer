@@ -1,9 +1,10 @@
 import java.io.*;
 import java.net.Socket;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.logging.Logger;
 
 public class ServerThread extends Thread{
+
+    Logger logger = Logger.getLogger(Server.class.getName());
     Socket serverClient;
     int clientNo;
 
@@ -22,7 +23,8 @@ public class ServerThread extends Thread{
 //            os.write("\r\n".getBytes());
 //            os.write("<TITLE>CSWeb</TITLE>".getBytes());
             FileInputStream input = new FileInputStream("D:\\Projects\\csweb\\index.html");
-            System.out.println(input);
+            logger.info("\u001B[34m"+"Input file is : " +input+"\u001B[0m");
+//            System.out.println(input);
             DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
             DataOutputStream os = new DataOutputStream(serverClient.getOutputStream());
             os.write("HTTP/1.0 200 OK\r\n".getBytes());
@@ -49,7 +51,8 @@ public class ServerThread extends Thread{
         }catch(Exception ex){
             System.out.println(ex);
         }finally{
-            System.out.println("Client -" + clientNo + " exit!! ");
+            logger.info("\u001B[34m"+"Client -" + clientNo + " exit!! ");
+//            System.out.println("Client -" + clientNo + " exit!! ");
         }
     }
 }
